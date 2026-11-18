@@ -1,0 +1,784 @@
+{
+ "format": "resnet18-pack",
+ "version": 1,
+ "created": "2026-11-11T23:16:56+00:00",
+ "source": {
+  "model": "torchvision resnet18 IMAGENET1K_V1",
+  "bn_folded": true,
+  "bn_eps": 1e-05,
+  "synthetic": false,
+  "torch": "2.6.0+cu126",
+  "reference_device": "cpu",
+  "tf32": false,
+  "torchvision": "0.21.0+cu126",
+  "imagenette": "C:\\data\\imagenette",
+  "imagenette_release": "imagenette2 (full size)",
+  "imagenette_url": "https://s3.amazonaws.com/fast-ai-imageclas/imagenette2.tgz",
+  "reference_top1_err_pct": 19.032,
+  "reference_top5_err_pct": 4.025
+ },
+ "layout": "NHWC",
+ "num_classes": 1000,
+ "image_shape": [
+  224,
+  224,
+  3
+ ],
+ "preprocess": {
+  "resize": 256,
+  "crop": 224,
+  "interpolation": "bilinear",
+  "mean": [
+   0.485,
+   0.456,
+   0.406
+  ],
+  "std": [
+   0.229,
+   0.224,
+   0.225
+  ]
+ },
+ "weights": {
+  "fp32": "weights_fp32.bin",
+  "fp16": "weights_fp16.bin",
+  "elements": 11684712
+ },
+ "image_sets": {
+  "val": {
+   "images": "images_val.bin",
+   "labels": "labels_val.bin",
+   "ref_logits": "ref_logits_val.bin",
+   "count": 3925
+  },
+  "dev": {
+   "images": "images_dev.bin",
+   "labels": "labels_dev.bin",
+   "ref_logits": "ref_logits_dev.bin",
+   "count": 500,
+   "val_indices": "dev_indices.bin"
+  },
+  "debug": {
+   "images": "images_debug.bin",
+   "labels": "labels_debug.bin",
+   "ref_logits": "ref_logits_debug.bin",
+   "count": 8,
+   "ref_dir": "ref"
+  }
+ },
+ "tensors": {
+  "image_u8": [
+   224,
+   224,
+   3
+  ],
+  "input": [
+   224,
+   224,
+   3
+  ],
+  "stem": [
+   112,
+   112,
+   64
+  ],
+  "pool0": [
+   56,
+   56,
+   64
+  ],
+  "l1b0_h": [
+   56,
+   56,
+   64
+  ],
+  "l1b0_out": [
+   56,
+   56,
+   64
+  ],
+  "l1b1_h": [
+   56,
+   56,
+   64
+  ],
+  "l1b1_out": [
+   56,
+   56,
+   64
+  ],
+  "l2b0_h": [
+   28,
+   28,
+   128
+  ],
+  "l2b0_ds": [
+   28,
+   28,
+   128
+  ],
+  "l2b0_out": [
+   28,
+   28,
+   128
+  ],
+  "l2b1_h": [
+   28,
+   28,
+   128
+  ],
+  "l2b1_out": [
+   28,
+   28,
+   128
+  ],
+  "l3b0_h": [
+   14,
+   14,
+   256
+  ],
+  "l3b0_ds": [
+   14,
+   14,
+   256
+  ],
+  "l3b0_out": [
+   14,
+   14,
+   256
+  ],
+  "l3b1_h": [
+   14,
+   14,
+   256
+  ],
+  "l3b1_out": [
+   14,
+   14,
+   256
+  ],
+  "l4b0_h": [
+   7,
+   7,
+   512
+  ],
+  "l4b0_ds": [
+   7,
+   7,
+   512
+  ],
+  "l4b0_out": [
+   7,
+   7,
+   512
+  ],
+  "l4b1_h": [
+   7,
+   7,
+   512
+  ],
+  "l4b1_out": [
+   7,
+   7,
+   512
+  ],
+  "feat": [
+   1,
+   1,
+   512
+  ],
+  "logits": [
+   1000
+  ],
+  "top5": [
+   5
+  ]
+ },
+ "ops": [
+  {
+   "name": "normalize",
+   "type": "normalize",
+   "in": "image_u8",
+   "out": "input",
+   "mean": [
+    0.485,
+    0.456,
+    0.406
+   ],
+   "std": [
+    0.229,
+    0.224,
+    0.225
+   ]
+  },
+  {
+   "name": "conv1",
+   "type": "conv",
+   "in": "input",
+   "out": "stem",
+   "k": 7,
+   "stride": 2,
+   "pad": 3,
+   "cin": 3,
+   "cout": 64,
+   "in_hw": [
+    224,
+    224
+   ],
+   "out_hw": [
+    112,
+    112
+   ],
+   "w_offset": 0,
+   "w_count": 9408,
+   "b_offset": 9408,
+   "b_count": 64,
+   "epilogue": "relu",
+   "skip": null,
+   "torch_name": "conv1"
+  },
+  {
+   "name": "maxpool",
+   "type": "maxpool",
+   "in": "stem",
+   "out": "pool0",
+   "k": 3,
+   "stride": 2,
+   "pad": 1,
+   "c": 64,
+   "in_hw": [
+    112,
+    112
+   ],
+   "out_hw": [
+    56,
+    56
+   ]
+  },
+  {
+   "name": "l1b0_conv1",
+   "type": "conv",
+   "in": "pool0",
+   "out": "l1b0_h",
+   "k": 3,
+   "stride": 1,
+   "pad": 1,
+   "cin": 64,
+   "cout": 64,
+   "in_hw": [
+    56,
+    56
+   ],
+   "out_hw": [
+    56,
+    56
+   ],
+   "w_offset": 9472,
+   "w_count": 36864,
+   "b_offset": 46336,
+   "b_count": 64,
+   "epilogue": "relu",
+   "skip": null,
+   "torch_name": "layer1.0.conv1"
+  },
+  {
+   "name": "l1b0_conv2",
+   "type": "conv",
+   "in": "l1b0_h",
+   "out": "l1b0_out",
+   "k": 3,
+   "stride": 1,
+   "pad": 1,
+   "cin": 64,
+   "cout": 64,
+   "in_hw": [
+    56,
+    56
+   ],
+   "out_hw": [
+    56,
+    56
+   ],
+   "w_offset": 46400,
+   "w_count": 36864,
+   "b_offset": 83264,
+   "b_count": 64,
+   "epilogue": "add_relu",
+   "skip": "pool0",
+   "torch_name": "layer1.0.conv2"
+  },
+  {
+   "name": "l1b1_conv1",
+   "type": "conv",
+   "in": "l1b0_out",
+   "out": "l1b1_h",
+   "k": 3,
+   "stride": 1,
+   "pad": 1,
+   "cin": 64,
+   "cout": 64,
+   "in_hw": [
+    56,
+    56
+   ],
+   "out_hw": [
+    56,
+    56
+   ],
+   "w_offset": 83328,
+   "w_count": 36864,
+   "b_offset": 120192,
+   "b_count": 64,
+   "epilogue": "relu",
+   "skip": null,
+   "torch_name": "layer1.1.conv1"
+  },
+  {
+   "name": "l1b1_conv2",
+   "type": "conv",
+   "in": "l1b1_h",
+   "out": "l1b1_out",
+   "k": 3,
+   "stride": 1,
+   "pad": 1,
+   "cin": 64,
+   "cout": 64,
+   "in_hw": [
+    56,
+    56
+   ],
+   "out_hw": [
+    56,
+    56
+   ],
+   "w_offset": 120256,
+   "w_count": 36864,
+   "b_offset": 157120,
+   "b_count": 64,
+   "epilogue": "add_relu",
+   "skip": "l1b0_out",
+   "torch_name": "layer1.1.conv2"
+  },
+  {
+   "name": "l2b0_conv1",
+   "type": "conv",
+   "in": "l1b1_out",
+   "out": "l2b0_h",
+   "k": 3,
+   "stride": 2,
+   "pad": 1,
+   "cin": 64,
+   "cout": 128,
+   "in_hw": [
+    56,
+    56
+   ],
+   "out_hw": [
+    28,
+    28
+   ],
+   "w_offset": 157184,
+   "w_count": 73728,
+   "b_offset": 230912,
+   "b_count": 128,
+   "epilogue": "relu",
+   "skip": null,
+   "torch_name": "layer2.0.conv1"
+  },
+  {
+   "name": "l2b0_ds",
+   "type": "conv",
+   "in": "l1b1_out",
+   "out": "l2b0_ds",
+   "k": 1,
+   "stride": 2,
+   "pad": 0,
+   "cin": 64,
+   "cout": 128,
+   "in_hw": [
+    56,
+    56
+   ],
+   "out_hw": [
+    28,
+    28
+   ],
+   "w_offset": 231040,
+   "w_count": 8192,
+   "b_offset": 239232,
+   "b_count": 128,
+   "epilogue": "none",
+   "skip": null,
+   "torch_name": "layer2.0.downsample.0"
+  },
+  {
+   "name": "l2b0_conv2",
+   "type": "conv",
+   "in": "l2b0_h",
+   "out": "l2b0_out",
+   "k": 3,
+   "stride": 1,
+   "pad": 1,
+   "cin": 128,
+   "cout": 128,
+   "in_hw": [
+    28,
+    28
+   ],
+   "out_hw": [
+    28,
+    28
+   ],
+   "w_offset": 239360,
+   "w_count": 147456,
+   "b_offset": 386816,
+   "b_count": 128,
+   "epilogue": "add_relu",
+   "skip": "l2b0_ds",
+   "torch_name": "layer2.0.conv2"
+  },
+  {
+   "name": "l2b1_conv1",
+   "type": "conv",
+   "in": "l2b0_out",
+   "out": "l2b1_h",
+   "k": 3,
+   "stride": 1,
+   "pad": 1,
+   "cin": 128,
+   "cout": 128,
+   "in_hw": [
+    28,
+    28
+   ],
+   "out_hw": [
+    28,
+    28
+   ],
+   "w_offset": 386944,
+   "w_count": 147456,
+   "b_offset": 534400,
+   "b_count": 128,
+   "epilogue": "relu",
+   "skip": null,
+   "torch_name": "layer2.1.conv1"
+  },
+  {
+   "name": "l2b1_conv2",
+   "type": "conv",
+   "in": "l2b1_h",
+   "out": "l2b1_out",
+   "k": 3,
+   "stride": 1,
+   "pad": 1,
+   "cin": 128,
+   "cout": 128,
+   "in_hw": [
+    28,
+    28
+   ],
+   "out_hw": [
+    28,
+    28
+   ],
+   "w_offset": 534528,
+   "w_count": 147456,
+   "b_offset": 681984,
+   "b_count": 128,
+   "epilogue": "add_relu",
+   "skip": "l2b0_out",
+   "torch_name": "layer2.1.conv2"
+  },
+  {
+   "name": "l3b0_conv1",
+   "type": "conv",
+   "in": "l2b1_out",
+   "out": "l3b0_h",
+   "k": 3,
+   "stride": 2,
+   "pad": 1,
+   "cin": 128,
+   "cout": 256,
+   "in_hw": [
+    28,
+    28
+   ],
+   "out_hw": [
+    14,
+    14
+   ],
+   "w_offset": 682112,
+   "w_count": 294912,
+   "b_offset": 977024,
+   "b_count": 256,
+   "epilogue": "relu",
+   "skip": null,
+   "torch_name": "layer3.0.conv1"
+  },
+  {
+   "name": "l3b0_ds",
+   "type": "conv",
+   "in": "l2b1_out",
+   "out": "l3b0_ds",
+   "k": 1,
+   "stride": 2,
+   "pad": 0,
+   "cin": 128,
+   "cout": 256,
+   "in_hw": [
+    28,
+    28
+   ],
+   "out_hw": [
+    14,
+    14
+   ],
+   "w_offset": 977280,
+   "w_count": 32768,
+   "b_offset": 1010048,
+   "b_count": 256,
+   "epilogue": "none",
+   "skip": null,
+   "torch_name": "layer3.0.downsample.0"
+  },
+  {
+   "name": "l3b0_conv2",
+   "type": "conv",
+   "in": "l3b0_h",
+   "out": "l3b0_out",
+   "k": 3,
+   "stride": 1,
+   "pad": 1,
+   "cin": 256,
+   "cout": 256,
+   "in_hw": [
+    14,
+    14
+   ],
+   "out_hw": [
+    14,
+    14
+   ],
+   "w_offset": 1010304,
+   "w_count": 589824,
+   "b_offset": 1600128,
+   "b_count": 256,
+   "epilogue": "add_relu",
+   "skip": "l3b0_ds",
+   "torch_name": "layer3.0.conv2"
+  },
+  {
+   "name": "l3b1_conv1",
+   "type": "conv",
+   "in": "l3b0_out",
+   "out": "l3b1_h",
+   "k": 3,
+   "stride": 1,
+   "pad": 1,
+   "cin": 256,
+   "cout": 256,
+   "in_hw": [
+    14,
+    14
+   ],
+   "out_hw": [
+    14,
+    14
+   ],
+   "w_offset": 1600384,
+   "w_count": 589824,
+   "b_offset": 2190208,
+   "b_count": 256,
+   "epilogue": "relu",
+   "skip": null,
+   "torch_name": "layer3.1.conv1"
+  },
+  {
+   "name": "l3b1_conv2",
+   "type": "conv",
+   "in": "l3b1_h",
+   "out": "l3b1_out",
+   "k": 3,
+   "stride": 1,
+   "pad": 1,
+   "cin": 256,
+   "cout": 256,
+   "in_hw": [
+    14,
+    14
+   ],
+   "out_hw": [
+    14,
+    14
+   ],
+   "w_offset": 2190464,
+   "w_count": 589824,
+   "b_offset": 2780288,
+   "b_count": 256,
+   "epilogue": "add_relu",
+   "skip": "l3b0_out",
+   "torch_name": "layer3.1.conv2"
+  },
+  {
+   "name": "l4b0_conv1",
+   "type": "conv",
+   "in": "l3b1_out",
+   "out": "l4b0_h",
+   "k": 3,
+   "stride": 2,
+   "pad": 1,
+   "cin": 256,
+   "cout": 512,
+   "in_hw": [
+    14,
+    14
+   ],
+   "out_hw": [
+    7,
+    7
+   ],
+   "w_offset": 2780544,
+   "w_count": 1179648,
+   "b_offset": 3960192,
+   "b_count": 512,
+   "epilogue": "relu",
+   "skip": null,
+   "torch_name": "layer4.0.conv1"
+  },
+  {
+   "name": "l4b0_ds",
+   "type": "conv",
+   "in": "l3b1_out",
+   "out": "l4b0_ds",
+   "k": 1,
+   "stride": 2,
+   "pad": 0,
+   "cin": 256,
+   "cout": 512,
+   "in_hw": [
+    14,
+    14
+   ],
+   "out_hw": [
+    7,
+    7
+   ],
+   "w_offset": 3960704,
+   "w_count": 131072,
+   "b_offset": 4091776,
+   "b_count": 512,
+   "epilogue": "none",
+   "skip": null,
+   "torch_name": "layer4.0.downsample.0"
+  },
+  {
+   "name": "l4b0_conv2",
+   "type": "conv",
+   "in": "l4b0_h",
+   "out": "l4b0_out",
+   "k": 3,
+   "stride": 1,
+   "pad": 1,
+   "cin": 512,
+   "cout": 512,
+   "in_hw": [
+    7,
+    7
+   ],
+   "out_hw": [
+    7,
+    7
+   ],
+   "w_offset": 4092288,
+   "w_count": 2359296,
+   "b_offset": 6451584,
+   "b_count": 512,
+   "epilogue": "add_relu",
+   "skip": "l4b0_ds",
+   "torch_name": "layer4.0.conv2"
+  },
+  {
+   "name": "l4b1_conv1",
+   "type": "conv",
+   "in": "l4b0_out",
+   "out": "l4b1_h",
+   "k": 3,
+   "stride": 1,
+   "pad": 1,
+   "cin": 512,
+   "cout": 512,
+   "in_hw": [
+    7,
+    7
+   ],
+   "out_hw": [
+    7,
+    7
+   ],
+   "w_offset": 6452096,
+   "w_count": 2359296,
+   "b_offset": 8811392,
+   "b_count": 512,
+   "epilogue": "relu",
+   "skip": null,
+   "torch_name": "layer4.1.conv1"
+  },
+  {
+   "name": "l4b1_conv2",
+   "type": "conv",
+   "in": "l4b1_h",
+   "out": "l4b1_out",
+   "k": 3,
+   "stride": 1,
+   "pad": 1,
+   "cin": 512,
+   "cout": 512,
+   "in_hw": [
+    7,
+    7
+   ],
+   "out_hw": [
+    7,
+    7
+   ],
+   "w_offset": 8811904,
+   "w_count": 2359296,
+   "b_offset": 11171200,
+   "b_count": 512,
+   "epilogue": "add_relu",
+   "skip": "l4b0_out",
+   "torch_name": "layer4.1.conv2"
+  },
+  {
+   "name": "avgpool",
+   "type": "avgpool",
+   "in": "l4b1_out",
+   "out": "feat",
+   "c": 512,
+   "in_hw": [
+    7,
+    7
+   ]
+  },
+  {
+   "name": "fc",
+   "type": "fc",
+   "in": "feat",
+   "out": "logits",
+   "cin": 512,
+   "cout": 1000,
+   "w_offset": 11171712,
+   "w_count": 512000,
+   "b_offset": 11683712,
+   "b_count": 1000,
+   "torch_name": "fc"
+  },
+  {
+   "name": "top5",
+   "type": "topk",
+   "in": "logits",
+   "out": "top5",
+   "k": 5
+  }
+ ]
+}

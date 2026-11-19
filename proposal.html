@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<!-- Source for "EE 524 resNet-18 Project Proposal.pdf". Render: weasyprint proposal.html "EE 524 resNet-18 Project Proposal.pdf" -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>EE 524 resNet-18 Project Proposal</title>
+<meta name="author" content="Project Team #8: Jasmine Soh, Colin Rocks, Julian Soh">
+<meta name="description" content="ResNet-18 CUDA inference engine proposal, version 1.0">
+<style>
+@page {
+  size: letter;
+  margin: 0.5in 0.6in 0.55in 0.6in;
+  @bottom-left { content: "Project Team #8  |  Version 1.0  |  November 19, 2026"; font: 7pt "Nimbus Sans", Helvetica, sans-serif; color: #6b7785; }
+  @bottom-right { content: counter(page) " / " counter(pages); font: 7pt "Nimbus Sans", Helvetica, sans-serif; color: #6b7785; }
+}
+body { font: 8.4pt/1.3 "Nimbus Sans", Helvetica, Arial, sans-serif; color: #1d2a36; margin: 0; }
+.kicker { font-size: 7pt; color: #6b7785; letter-spacing: .02em; }
+h1 { font-size: 17pt; line-height: 1.1; color: #12344d; margin: 2pt 0 5pt; }
+.meta { background: #eef2f5; padding: 3pt 7pt; font-size: 7.5pt; margin-bottom: 4pt; }
+h2 { font-size: 10.5pt; color: #0f6474; margin: 7pt 0 2pt; }
+p { margin: 2pt 0; }
+table { width: 100%; border-collapse: collapse; margin: 3pt 0; }
+th { background: #12344d; color: #fff; text-align: left; padding: 2.5pt 5pt; font-size: 7.6pt; }
+td { padding: 2.5pt 5pt; vertical-align: top; border-bottom: 0.6pt solid #c9d2da; }
+td:first-child { font-weight: bold; width: 23%; }
+code { font: 6.9pt "Nimbus Mono PS", Courier, monospace; }
+.note { font-size: 7.4pt; }
+.refs p { margin: 1.5pt 0; font-size: 7.8pt; }
+a { color: #0f4f8a; }
+.page2 { break-before: page; }
+</style>
+</head>
+<body>
+
+<div class="kicker">EE P 524 / GPU COMPUTING &nbsp;|&nbsp; PROJECT TEAM #8</div>
+<h1>EE 524 resNet-18 Project Proposal</h1>
+<div class="meta"><b>Version 1.0</b> &nbsp;|&nbsp; November 19, 2026 &nbsp;|&nbsp; Repository: <a href="https://github.com/juliansoh/EE524-ResNet18-Project">github.com/juliansoh/EE524-ResNet18-Project</a></div>
+
+<h2>1. Project Team Members</h2>
+<p><b>Project Team #8:</b> Jasmine Soh, Colin Rocks, and Julian Soh.</p>
+
+<h2>2. Planned Tiers</h2>
+<p>Build and optimize a correct ResNet-18 CUDA inference engine on the NVIDIA T4 GPU. <b>The team will attempt to reach
+T4 (tensor cores)</b>, progressing through T0-T4 as defined on slide 15. Scope can be adjusted as the project progresses.</p>
+<table>
+<tr><th>Tier / definition</th><th>Planned implementation and evidence</th></tr>
+<tr><td>T0 - Baseline</td><td>Build the starter; pass <code>check.py</code>; profile all 12 shape classes; select a batch size; submit the smoke-test entry.</td></tr>
+<tr><td>T1 - Batched GEMM path</td><td>NHWC layout and batching; explicit im2col plus our own shared-memory-tiled SGEMM; bank-conflict-free tiles; fused bias/ReLU epilogues.</td></tr>
+<tr><td>T2 - Implicit GEMM</td><td>Remove the im2col buffer: compute input-gather addresses during tile loads; fuse the residual add; per-shape launch configurations.</td></tr>
+<tr><td>T3 - Register tiling</td><td>Thread coarsening, 2-D block/register tiles (Boehm K4/K5), aligned <code>float4</code> loads with safe edge handling, per-shape tile tuning.</td></tr>
+<tr><td>T4 - Tensor cores (target)</td><td>FP16 WMMA / <code>mma.sync</code> with FP32 accumulation and FP16 weights/activations; validate the reduced-precision path.</td></tr>
+<tr><td>T5 - Fusion and tuning</td><td>Stretch only: fused stem/maxpool, shared downsample input reads, warp-shuffle avgpool/top-5, fewer launches, per-shape autotuning.</td></tr>
+</table>
+<p><b>Roadmap.</b> By the design specification (Dec 2): T1 and T2 on the FP32 leaderboard, with the T3 and T4 kernel designs in the
+specification. By the leaderboard freeze (Dec 15): T3 in FP32 (committed) and T4 in the FP16 category (target). T5 items only if time remains.</p>
+<p><b>T0 baseline.</b> Unmodified starter (<code>conv=direct</code>, FP32) on a Tesla T4: <b>18.6 images/s</b> on the dev set (500 images, batch 32,
+median of 3 timed passes) and 13.8 images/s on the debug set (8 images, batch 8). Smoke-test package: <code>Team-8_20261119T192840Z.zip</code>.</p>
+<p><b>Planned batch size: 64.</b> Stage 4 gives only 49 GEMM rows per image. For a 512-channel stage-4 conv with 64&times;64 tiles, batch 8
+gives 7&times;8 = 56 thread blocks for 40 SMs, but batch 64 gives 49&times;8 = 392. The T1 im2col buffer at batch 64 is about 462 MB,
+well inside the 16 GB on the T4. At each tier we will measure batch 32/64/128/256 on the T4 and submit the fastest.</p>
+
+<h2>3. Work Breakdown</h2>
+<table>
+<tr><th>Member</th><th>Kernels owned</th><th>Other project tasks</th></tr>
+<tr><td>Julian Soh</td><td>Conv/GEMM path T1-T3: im2col, tiled SGEMM, implicit GEMM, register tiling, fused bias/ReLU/residual epilogues; executor integration.</td><td>Coordinates assembly of the final presentation and project artifacts.</td></tr>
+<tr><td>Jasmine Soh</td><td>Tensor-core path T4: FP16 WMMA / <code>mma.sync</code> conv kernels, FP16 weight and activation conversion.</td><td>Project management: milestones, scope, task tracking, submissions.</td></tr>
+<tr><td>Colin Rocks</td><td>Normalize, maxpool, global avgpool, fully connected, and top-5 kernels.</td><td>Validation: layer and end-to-end checks, regression tests, benchmarks, NCU report collection.</td></tr>
+</table>
+<p class="note"><b>Shared:</b> T5 stretch work, design specification, presentation content and delivery, and the final report. Owners review each
+other's kernels before each leaderboard snapshot.</p>
+
+<div class="page2"></div>
+<h2>4. Nsight Compute Profiling Plan</h2>
+<p>Profile representative kernels across all 12 shape classes at each tier, at the same batch size and precision. Keep each report.
+Confirm counter names on the T4 with <code>ncu --query-metrics</code>.</p>
+<table>
+<tr><th>Metric / analysis</th><th>Specific counters; relevance</th></tr>
+<tr><td>Roofline position</td><td><code>sm__throughput.avg.pct_of_peak_sustained_elapsed</code>, <code>dram__throughput.avg.pct_of_peak_sustained_elapsed</code>; Speed Of Light roofline chart.
+Shows whether each kernel is compute-bound or memory-bound, and whether the tier moved it. Count an FMA as two FLOPs; use FP16 peaks for the tensor path.</td></tr>
+<tr><td>DRAM traffic</td><td><code>dram__bytes_read.sum</code>, <code>dram__bytes_write.sum</code>. Gives arithmetic intensity (FLOP/byte); shows the tile reuse
+and the removal of the T1 im2col round trip at T2.</td></tr>
+<tr><td>Shared-memory bank conflicts</td><td><code>l1tex__data_bank_conflicts_pipe_lsu_mem_shared.sum</code>. Must drop to near zero after padding or swizzling
+in the tiled GEMM.</td></tr>
+<tr><td>Global-load coalescing</td><td><code>l1tex__t_sectors_pipe_lsu_mem_global_op_ld.sum</code> &divide; <code>l1tex__t_requests_pipe_lsu_mem_global_op_ld.sum</code>.
+Four sectors per request is ideal for aligned 32-bit warp loads; NHWC must get there.</td></tr>
+<tr><td>L1 / L2 hit rates</td><td><code>l1tex__t_sector_hit_rate.pct</code>, <code>lts__t_sector_hit_rate.pct</code>. Shows weight and activation reuse;
+read together with DRAM bytes and time, because a hit rate alone does not prove a speedup.</td></tr>
+<tr><td>Achieved occupancy</td><td><code>sm__warps_active.avg.pct_of_peak_sustained_active</code>. Registers, shared memory, and block size set it;
+T3 register tiling trades occupancy for ILP.</td></tr>
+<tr><td>Warp stall reasons</td><td>Warp State Statistics section: long scoreboard (waiting on memory), MIO throttle (shared-memory pressure),
+barrier (sync imbalance). Names the bottleneck of each kernel.</td></tr>
+<tr><td>Register pressure and spills</td><td><code>launch__registers_per_thread</code>, <code>launch__shared_mem_per_block_static</code>,
+<code>l1tex__t_sectors_pipe_lsu_mem_local_op_ld.sum</code> / <code>_st.sum</code>. Detects spills and occupancy loss from larger register tiles.</td></tr>
+<tr><td>Tensor-core use</td><td><code>sm__pipe_tensor_cycles_active.avg.pct_of_peak_sustained_active</code>. Confirms that the T4 kernels keep the tensor pipe busy.</td></tr>
+<tr><td>Time and speedup</td><td><code>gpu__time_duration.sum</code> per kernel; cudaEvent per layer or Nsight Systems for the layer breakdown.
+Optimize the three slowest shape classes, then measure again. Speedup = T0 time / optimized time for the same workload.</td></tr>
+</table>
+<p class="note">Isolate the timed region with <code>cudaProfilerStart</code>/<code>cudaProfilerStop</code> and <code>--profile-from-start off</code>.
+Measure scored images/s separately from instrumented NCU runs.</p>
+
+<h2>Validation</h2>
+<p>Validate each tier against the debug layer references, then the dev and full validation sets. Per-layer relative error: FP32 &le; 10<sup>-3</sup>,
+FP16 &le; 2&times;10<sup>-2</sup>; top-1 agreement &ge; 99.5%; top-1/top-5 label error within &plusmn;0.5 percentage points of the reference.
+All scored kernels are our own; no cuDNN, cuBLAS, or other GPU compute library.</p>
+
+<h2>5. Primary References</h2>
+<div class="refs">
+<p><b>[1]</b> EE P 524 lectures and notes, the final-project introduction (L6), the project specification, and the starter kit.</p>
+<p><b>[2]</b> W. Hwu, D. Kirk, I. El Hajj. <i>Programming Massively Parallel Processors: A Hands-on Approach</i>, 4th ed. Morgan Kaufmann, 2022.</p>
+<p><b>[3]</b> K. He, X. Zhang, S. Ren, J. Sun. <a href="https://arxiv.org/abs/1512.03385"><i>Deep Residual Learning for Image Recognition</i></a>. CVPR 2016.</p>
+<p><b>[4]</b> S. Chetlur et al. <a href="https://arxiv.org/abs/1410.0759"><i>cuDNN: Efficient Primitives for Deep Learning</i></a>. arXiv:1410.0759, 2014 (convolution as GEMM, implicit im2col).</p>
+<p><b>[5]</b> S. Boehm. <a href="https://siboehm.com/articles/22/CUDA-MMM"><i>How to Optimize a CUDA Matmul Kernel for cuBLAS-like Performance</i></a> (2022),
+and code sample <a href="https://github.com/siboehm/SGEMM_CUDA">github.com/siboehm/SGEMM_CUDA</a> (kernels 1-12).</p>
+<p><b>[6]</b> NVIDIA. <a href="https://docs.nvidia.com/cuda/cuda-c-programming-guide/">CUDA C++ Programming Guide</a> (Warp Matrix Functions / WMMA),
+<a href="https://docs.nvidia.com/cuda/parallel-thread-execution/">PTX ISA</a> (<code>mma.sync</code>),
+<a href="https://docs.nvidia.com/cuda/turing-tuning-guide/">Turing Tuning Guide</a>, and the T4 datasheet.</p>
+<p><b>[7]</b> NVIDIA. <a href="https://docs.nvidia.com/nsight-compute/ProfilingGuide/index.html">Nsight Compute Profiling Guide</a> and
+<a href="https://docs.nvidia.com/nsight-compute/NsightComputeCli/index.html">CLI Guide</a>.</p>
+</div>
+
+</body>
+</html>

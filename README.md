@@ -16,16 +16,14 @@ Code and project artifacts are managed in
 
 ## Team and responsibilities
 
-| Member | Coordination responsibility |
-| --- | --- |
-| Jasmine Soh | Project management: milestones, scope, task tracking, integration, and submission readiness. |
-| Colin Rocks | Validation: layer and end-to-end checks, regression testing, benchmarks, and profiling evidence. |
-| Julian Soh | Assembly of Final Presentation & Project Artifacts: ensure materials and final artifacts are complete, organized, and ready for delivery. This is not a presentation-lead or sole-presenter role. |
+| Member | Kernels owned | Other project tasks |
+| --- | --- | --- |
+| Julian Soh | Conv/GEMM path T1-T3: im2col, tiled SGEMM, implicit GEMM, register tiling, fused epilogues; executor integration. | Assembly of the final presentation and project artifacts. |
+| Jasmine Soh | Tensor-core path T4: FP16 WMMA / `mma.sync` conv kernels, FP16 conversion. | Project management: milestones, scope, task tracking, submissions. |
+| Colin Rocks | Normalize, maxpool, global avgpool, fully connected, and top-5 kernels. | Validation: layer and end-to-end checks, regression tests, benchmarks, NCU reports. |
 
-All three members collectively implement and optimize T0-T4, including
-convolution/GEMM, normalization, pooling, fully connected/top-5, fused epilogues,
-and necessary executor integration. Everyone actively contributes to all three
-coordination areas. Presentation content and delivery are shared responsibilities.
+T5 stretch work, the design specification, the presentation, and the final
+report are shared. Owners review each other's kernels before each leaderboard snapshot.
 
 ## Assignment sources
 
@@ -36,8 +34,8 @@ coordination areas. Presentation content and delivery are shared responsibilitie
   network, data formats, engine interface, checker, submission rules, and final deliverables.
 - [Starter-kit getting-started guide](artifacts/resnet18_project/GETTING_STARTED.md)
   and [engine README](artifacts/resnet18_project/starter/README.md).
-- [Team proposal (draft)](EE%20524%20resNet-18%20Project%20Proposal%20%28draft%29.pdf).
-  Versions below 1.0 indicate a draft.
+- [Team proposal](EE%20524%20resNet-18%20Project%20Proposal.pdf), built from
+  [proposal.html](proposal.html) with `weasyprint proposal.html "EE 524 resNet-18 Project Proposal.pdf"`.
 
 ## Deliverables and deadlines
 
@@ -48,7 +46,7 @@ All dates are in **2026**; times are reproduced as stated in the assignment.
 | --- | --- | --- |
 | Team formation/registration on Canvas | November 16, 11:59 PM* | -- |
 | Starter-kit release | November 16, 9:00 AM | -- |
-| Project proposal, PDF, maximum 2 pages | November 18, 11:59 PM | 10% |
+| Project proposal, PDF, maximum 2 pages | November 20, 11:59 PM | 10% |
 | T0 smoke-test leaderboard submission | November 22, 11:59 PM | -- |
 | Presentation date/time signup | November 24, 5:59 PM* | -- |
 | T1+ leaderboard submissions | November 20-December 15 | -- |
@@ -114,7 +112,8 @@ submission deadlines. Validate and retain evidence for each completed tier.
 |-- readme.md
 |-- AGENTS.md
 |-- Au26_L6_FinalProject_ResNet18-Engine_Intro_v2_w_notes.pdf
-|-- EE 524 resNet-18 Project Proposal (draft).pdf
+|-- EE 524 resNet-18 Project Proposal.pdf
+|-- proposal.html
 `-- artifacts/
     |-- resnet18_project/
     |   |-- Au26_GPUCompute_ResNet18_FinalProject_Spec.pdf

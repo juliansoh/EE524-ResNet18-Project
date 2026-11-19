@@ -1,0 +1,307 @@
+Microsoft Windows [Version 10.0.26200.9974]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\juliansoh>cd\
+
+C:\>dir
+ Volume in drive C is Windows
+ Volume Serial Number is D696-CEBE
+
+ Directory of C:\
+
+11/18/2026  01:04 PM    <DIR>          EE524-ResNet18-Project
+09/12/2026  06:54 PM    <DIR>          inetpub
+11/02/2026  11:46 AM    <DIR>          OneDriveTemp
+10/08/2026  08:03 AM    <DIR>          Packages
+03/31/2024  11:26 PM    <DIR>          PerfLogs
+11/13/2026  09:29 AM    <DIR>          Program Files
+11/05/2026  12:45 AM    <DIR>          Program Files (x86)
+10/08/2026  08:06 AM    <DIR>          Users
+11/18/2026  12:31 AM    <DIR>          Windows
+10/08/2026  08:03 AM    <DIR>          WindowsAzure
+               0 File(s)              0 bytes
+              10 Dir(s)   9,495,449,600 bytes free
+
+C:\>cd EE524-ResNet18-Project
+
+C:\EE524-ResNet18-Project>dir
+ Volume in drive C is Windows
+ Volume Serial Number is D696-CEBE
+
+ Directory of C:\EE524-ResNet18-Project
+
+11/18/2026  01:04 PM    <DIR>          .
+11/18/2026  01:04 PM    <DIR>          resnet18_pack
+11/17/2026  10:59 PM       640,477,869 resnet18_pack.zip
+11/18/2026  01:04 PM    <DIR>          resnet18_project
+               1 File(s)    640,477,869 bytes
+               3 Dir(s)   9,485,565,952 bytes free
+
+C:\EE524-ResNet18-Project>cd resnet18_project
+
+C:\EE524-ResNet18-Project\resnet18_project>dir
+ Volume in drive C is Windows
+ Volume Serial Number is D696-CEBE
+
+ Directory of C:\EE524-ResNet18-Project\resnet18_project
+
+11/18/2026  01:04 PM    <DIR>          .
+11/18/2026  01:04 PM    <DIR>          ..
+11/18/2026  01:04 PM           147,338 Au26_GPUCompute_ResNet18_FinalProject_Spec.pdf
+11/18/2026  01:04 PM            10,533 GETTING_STARTED.md
+11/18/2026  01:04 PM             1,145 README.md
+11/18/2026  01:04 PM             3,139 REFERENCES.md
+11/18/2026  01:04 PM    <DIR>          starter
+11/18/2026  01:07 PM    <DIR>          tools
+               4 File(s)        162,155 bytes
+               4 Dir(s)   9,485,873,152 bytes free
+
+C:\EE524-ResNet18-Project\resnet18_project>python tools\check.py --pack C:\EE524-ResNet18-Project\resnet18_pack --verify-pack --no-e2e
+pack verification: OK (C:\EE524-ResNet18-Project\resnet18_pack\checksums.sha256)
+
+C:\EE524-ResNet18-Project\resnet18_project>certutil -hasfile C:\EE524-ResNet18-Project\resnet18_pack\checksums.sha256 SHA256
+CertUtil: Unknown arg: -hasfile
+
+
+CertUtil -?              -- Display a verb list (command list)
+CertUtil -dump -?        -- Display help text for the "dump" verb
+CertUtil -v -?           -- Display all help text for all verbs
+
+
+C:\EE524-ResNet18-Project\resnet18_project>certutil -hashfile C:\EE524-ResNet18-Project\resnet18_pack\checksums.sha256 SHA256
+SHA256 hash of C:\EE524-ResNet18-Project\resnet18_pack\checksums.sha256:
+359370c13f34961bdf159dec3221347a0ba605e1140b017e058fc9fcf7a38e94
+CertUtil: -hashfile command completed successfully.
+
+C:\EE524-ResNet18-Project\resnet18_project>dir
+ Volume in drive C is Windows
+ Volume Serial Number is D696-CEBE
+
+ Directory of C:\EE524-ResNet18-Project\resnet18_project
+
+11/18/2026  01:04 PM    <DIR>          .
+11/18/2026  01:04 PM    <DIR>          ..
+11/18/2026  01:04 PM           147,338 Au26_GPUCompute_ResNet18_FinalProject_Spec.pdf
+11/18/2026  01:04 PM            10,533 GETTING_STARTED.md
+11/18/2026  01:04 PM             1,145 README.md
+11/18/2026  01:04 PM             3,139 REFERENCES.md
+11/18/2026  01:04 PM    <DIR>          starter
+11/18/2026  01:07 PM    <DIR>          tools
+               4 File(s)        162,155 bytes
+               4 Dir(s)   9,470,730,240 bytes free
+
+C:\EE524-ResNet18-Project\resnet18_project>cd starter
+
+C:\EE524-ResNet18-Project\resnet18_project\starter>cmake -B build
+-- Building for: Visual Studio 18 2026
+-- Selecting Windows SDK version 10.0.26100.0 to target Windows 10.0.26200.
+-- The CXX compiler identification is MSVC 19.51.36260.0
+-- The CUDA compiler identification is NVIDIA 13.5.37 with host compiler MSVC 19.51.36260.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Detecting CUDA compiler ABI info
+-- Detecting CUDA compiler ABI info - done
+-- Check for working CUDA compiler: C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v13.5/bin/nvcc.exe - skipped
+-- Detecting CUDA compile features
+-- Detecting CUDA compile features - done
+-- Configuring done (45.5s)
+-- Generating done (0.1s)
+-- Build files have been written to: C:/EE524-ResNet18-Project/resnet18_project/starter/build
+
+C:\EE524-ResNet18-Project\resnet18_project\starter>cmake --build build --config Release -j
+MSBuild version 18.11.1-1.26513.3+940033be3 for .NET Framework
+
+  Checking File Globs
+  1>Checking Build System
+  Building Custom Rule C:/EE524-ResNet18-Project/resnet18_project/starter/CMakeLists.txt
+  Compiling CUDA source file ..\src\executor.cu...
+
+  C:\EE524-ResNet18-Project\resnet18_project\starter\build>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.5\bi
+  n\nvcc.exe"  --use-local-env -ccbin "C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\
+  bin\HostX64\x64" -x cu   -I"C:\EE524-ResNet18-Project\resnet18_project\starter\include" -I"C:\EE524-ResNet18-Project\
+  resnet18_project\starter\third_party" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.5\include"     --keep
+  -dir engine\x64\Release  -maxrregcount=0     --machine 64 --compile -forward-unknown-to-host-compiler -std=c++17 --ge
+  nerate-code=arch=compute_75,code=[compute_75,sm_75] -lineinfo --expt-relaxed-constexpr -Xcompiler="/EHsc -Ob2"   -D_W
+  INDOWS -DNDEBUG -D"CMAKE_INTDIR=\"Release\"" -D_MBCS -DWIN32 -D_WINDOWS -DNDEBUG -D"CMAKE_INTDIR=\"Release\"" -Xcompi
+  ler "/EHsc /W1 /nologo /O2 /FS   /MD /GR" -Xcompiler "/Fdengine.dir\Release\vc145.pdb" -o engine.dir\Release\executor
+  .obj "C:\EE524-ResNet18-Project\resnet18_project\starter\src\executor.cu"
+  Compiling CUDA source file ..\src\kernels\fc_topk.cu...
+  Compiling CUDA source file ..\src\kernels\conv_direct.cu...
+  Compiling CUDA source file ..\src\kernels\conv_im2col.cu...
+
+  C:\EE524-ResNet18-Project\resnet18_project\starter\build>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.5\bi
+  n\nvcc.exe"  --use-local-env -ccbin "C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\
+  bin\HostX64\x64" -x cu   -I"C:\EE524-ResNet18-Project\resnet18_project\starter\include" -I"C:\EE524-ResNet18-Project\
+  resnet18_project\starter\third_party" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.5\include"     --keep
+  -dir engine\x64\Release  -maxrregcount=0     --machine 64 --compile -forward-unknown-to-host-compiler -std=c++17 --ge
+  nerate-code=arch=compute_75,code=[compute_75,sm_75] -lineinfo --expt-relaxed-constexpr -Xcompiler="/EHsc -Ob2"   -D_W
+  INDOWS -DNDEBUG -D"CMAKE_INTDIR=\"Release\"" -D_MBCS -DWIN32 -D_WINDOWS -DNDEBUG -D"CMAKE_INTDIR=\"Release\"" -Xcompi
+  ler "/EHsc /W1 /nologo /O2 /FS   /MD /GR" -Xcompiler "/Fdengine.dir\Release\vc145.pdb" -o engine.dir\Release\conv_dir
+  ect.obj "C:\EE524-ResNet18-Project\resnet18_project\starter\src\kernels\conv_direct.cu"
+
+  C:\EE524-ResNet18-Project\resnet18_project\starter\build>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.5\bi
+  n\nvcc.exe"  --use-local-env -ccbin "C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\
+  bin\HostX64\x64" -x cu   -I"C:\EE524-ResNet18-Project\resnet18_project\starter\include" -I"C:\EE524-ResNet18-Project\
+  resnet18_project\starter\third_party" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.5\include"     --keep
+  -dir engine\x64\Release  -maxrregcount=0     --machine 64 --compile -forward-unknown-to-host-compiler -std=c++17 --ge
+  nerate-code=arch=compute_75,code=[compute_75,sm_75] -lineinfo --expt-relaxed-constexpr -Xcompiler="/EHsc -Ob2"   -D_W
+  INDOWS -DNDEBUG -D"CMAKE_INTDIR=\"Release\"" -D_MBCS -DWIN32 -D_WINDOWS -DNDEBUG -D"CMAKE_INTDIR=\"Release\"" -Xcompi
+  ler "/EHsc /W1 /nologo /O2 /FS   /MD /GR" -Xcompiler "/Fdengine.dir\Release\vc145.pdb" -o engine.dir\Release\fc_topk.
+  obj "C:\EE524-ResNet18-Project\resnet18_project\starter\src\kernels\fc_topk.cu"
+
+  C:\EE524-ResNet18-Project\resnet18_project\starter\build>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.5\bi
+  n\nvcc.exe"  --use-local-env -ccbin "C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\
+  bin\HostX64\x64" -x cu   -I"C:\EE524-ResNet18-Project\resnet18_project\starter\include" -I"C:\EE524-ResNet18-Project\
+  resnet18_project\starter\third_party" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.5\include"     --keep
+  -dir engine\x64\Release  -maxrregcount=0     --machine 64 --compile -forward-unknown-to-host-compiler -std=c++17 --ge
+  nerate-code=arch=compute_75,code=[compute_75,sm_75] -lineinfo --expt-relaxed-constexpr -Xcompiler="/EHsc -Ob2"   -D_W
+  INDOWS -DNDEBUG -D"CMAKE_INTDIR=\"Release\"" -D_MBCS -DWIN32 -D_WINDOWS -DNDEBUG -D"CMAKE_INTDIR=\"Release\"" -Xcompi
+  ler "/EHsc /W1 /nologo /O2 /FS   /MD /GR" -Xcompiler "/Fdengine.dir\Release\vc145.pdb" -o engine.dir\Release\conv_im2
+  col.obj "C:\EE524-ResNet18-Project\resnet18_project\starter\src\kernels\conv_im2col.cu"
+  conv_direct.cu
+  fc_topk.cu
+  conv_im2col.cu
+  Compiling CUDA source file ..\src\kernels\normalize.cu...
+  Compiling CUDA source file ..\src\kernels\pool.cu...
+  Compiling CUDA source file ..\src\main.cu...
+
+  C:\EE524-ResNet18-Project\resnet18_project\starter\build>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.5\bi
+  n\nvcc.exe"  --use-local-env -ccbin "C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\
+  bin\HostX64\x64" -x cu   -I"C:\EE524-ResNet18-Project\resnet18_project\starter\include" -I"C:\EE524-ResNet18-Project\
+  resnet18_project\starter\third_party" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.5\include"     --keep
+  -dir engine\x64\Release  -maxrregcount=0     --machine 64 --compile -forward-unknown-to-host-compiler -std=c++17 --ge
+  nerate-code=arch=compute_75,code=[compute_75,sm_75] -lineinfo --expt-relaxed-constexpr -Xcompiler="/EHsc -Ob2"   -D_W
+  INDOWS -DNDEBUG -D"CMAKE_INTDIR=\"Release\"" -D_MBCS -DWIN32 -D_WINDOWS -DNDEBUG -D"CMAKE_INTDIR=\"Release\"" -Xcompi
+  ler "/EHsc /W1 /nologo /O2 /FS   /MD /GR" -Xcompiler "/Fdengine.dir\Release\vc145.pdb" -o engine.dir\Release\normaliz
+  e.obj "C:\EE524-ResNet18-Project\resnet18_project\starter\src\kernels\normalize.cu"
+
+  C:\EE524-ResNet18-Project\resnet18_project\starter\build>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.5\bi
+  n\nvcc.exe"  --use-local-env -ccbin "C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\
+  bin\HostX64\x64" -x cu   -I"C:\EE524-ResNet18-Project\resnet18_project\starter\include" -I"C:\EE524-ResNet18-Project\
+  resnet18_project\starter\third_party" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.5\include"     --keep
+  -dir engine\x64\Release  -maxrregcount=0     --machine 64 --compile -forward-unknown-to-host-compiler -std=c++17 --ge
+  nerate-code=arch=compute_75,code=[compute_75,sm_75] -lineinfo --expt-relaxed-constexpr -Xcompiler="/EHsc -Ob2"   -D_W
+  INDOWS -DNDEBUG -D"CMAKE_INTDIR=\"Release\"" -D_MBCS -DWIN32 -D_WINDOWS -DNDEBUG -D"CMAKE_INTDIR=\"Release\"" -Xcompi
+  ler "/EHsc /W1 /nologo /O2 /FS   /MD /GR" -Xcompiler "/Fdengine.dir\Release\vc145.pdb" -o engine.dir\Release\pool.obj
+   "C:\EE524-ResNet18-Project\resnet18_project\starter\src\kernels\pool.cu"
+
+  C:\EE524-ResNet18-Project\resnet18_project\starter\build>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.5\bi
+  n\nvcc.exe"  --use-local-env -ccbin "C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.51.36231\
+  bin\HostX64\x64" -x cu   -I"C:\EE524-ResNet18-Project\resnet18_project\starter\include" -I"C:\EE524-ResNet18-Project\
+  resnet18_project\starter\third_party" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v13.5\include"     --keep
+  -dir engine\x64\Release  -maxrregcount=0     --machine 64 --compile -forward-unknown-to-host-compiler -std=c++17 --ge
+  nerate-code=arch=compute_75,code=[compute_75,sm_75] -lineinfo --expt-relaxed-constexpr -Xcompiler="/EHsc -Ob2"   -D_W
+  INDOWS -DNDEBUG -D"CMAKE_INTDIR=\"Release\"" -D_MBCS -DWIN32 -D_WINDOWS -DNDEBUG -D"CMAKE_INTDIR=\"Release\"" -Xcompi
+  ler "/EHsc /W1 /nologo /O2 /FS   /MD /GR" -Xcompiler "/Fdengine.dir\Release\vc145.pdb" -o engine.dir\Release\main.obj
+   "C:\EE524-ResNet18-Project\resnet18_project\starter\src\main.cu"
+  normalize.cu
+  pool.cu
+  executor.cu
+  main.cu
+  manifest.cpp
+  engine.vcxproj -> C:\EE524-ResNet18-Project\resnet18_project\starter\build\Release\engine.exe
+  Building Custom Rule C:/EE524-ResNet18-Project/resnet18_project/starter/CMakeLists.txt
+
+C:\EE524-ResNet18-Project\resnet18_project\starter>cd ..
+
+C:\EE524-ResNet18-Project\resnet18_project>python tools\check.py --pack C:\EE524-ResNet18-Project\resnet18_pack --out out\debug --set debug --layers --engine starter\build\Release\engine.exe
+running: starter\build\Release\engine.exe --pack C:\EE524-ResNet18-Project\resnet18_pack --set debug --out out\debug --precision fp32 --iters 1 --warmup 0 --dump --batch 8
+Tesla T4 | fp32 | conv=direct | set=debug (8 images) | batch 8 | 0 warm-up + 1 timed | median 579.99 ms | 13.8 images/s
+wrote out\debug/logits.bin, out\debug/top5.bin, out\debug/timing.json, dump/*.bin
+
+per-layer check on the debug set (8 images), tolerance max|err|/max|ref| <= 0.001
+  tensor       status     max|err|    max|ref|    rel err
+  input        PASS      4.768e-07   2.640e+00   1.81e-07
+  stem         PASS      1.907e-06   4.682e+00   4.07e-07
+  pool0        PASS      1.907e-06   4.682e+00   4.07e-07
+  l1b0_h       PASS      4.053e-06   2.150e+00   1.89e-06
+  l1b0_out     PASS      5.364e-06   5.063e+00   1.06e-06
+  l1b1_h       PASS      3.815e-06   2.977e+00   1.28e-06
+  l1b1_out     PASS      1.594e-05   6.572e+00   2.42e-06
+  l2b0_h       PASS      1.011e-05   2.920e+00   3.46e-06
+  l2b0_ds      PASS      5.782e-06   3.557e+00   1.63e-06
+  l2b0_out     PASS      9.984e-06   5.072e+00   1.97e-06
+  l2b1_h       PASS      6.646e-06   3.017e+00   2.20e-06
+  l2b1_out     PASS      1.425e-05   6.186e+00   2.30e-06
+  l3b0_h       PASS      8.604e-06   3.041e+00   2.83e-06
+  l3b0_ds      PASS      4.172e-06   1.464e+00   2.85e-06
+  l3b0_out     PASS      7.629e-06   4.326e+00   1.76e-06
+  l3b1_h       PASS      5.752e-06   2.424e+00   2.37e-06
+  l3b1_out     PASS      1.109e-05   3.647e+00   3.04e-06
+  l4b0_h       PASS      4.411e-06   1.867e+00   2.36e-06
+  l4b0_ds      PASS      9.477e-06   2.901e+00   3.27e-06
+  l4b0_out     PASS      8.553e-06   4.178e+00   2.05e-06
+  l4b1_h       PASS      3.576e-06   2.006e+00   1.78e-06
+  l4b1_out     PASS      3.719e-05   2.169e+01   1.71e-06
+  feat         PASS      7.629e-06   9.133e+00   8.35e-07
+  logits       PASS      1.717e-05   1.644e+01   1.04e-06
+  top5         PASS    exact rows 1.000  top-1 match 1.000
+  RESULT: PASS
+
+end-to-end check on set 'debug' (8 images)
+  top-1 agreement with reference logits : 100.00%   (gate >= 99.5%)  PASS
+  logit error vs reference               : max 1.764e-05, mean 2.746e-06  finite: PASS
+  top-1 error vs labels                  : 12.50%  (reference 12.50%, gate within 0.5 pp)  PASS
+  top-5 error vs labels                  : 12.50%  (reference 12.50%)  PASS
+  top5.bin consistent with own logits    : 100.00% of rows  PASS
+  timing.json                            : 13.8 images/s, median 579.99 ms, batch 8, fp32, Tesla T4
+  RESULT: PASS
+
+OVERALL: PASS
+
+C:\EE524-ResNet18-Project\resnet18_project>python tools\check.py --pack C:\EE524-ResNet18-Project\resnet18_pack --out out\dev --set dev --engine starter\build\Release\engine.exe --batch 32 --iters 3 --warmup 1
+running: starter\build\Release\engine.exe --pack C:\EE524-ResNet18-Project\resnet18_pack --set dev --out out\dev --precision fp32 --iters 3 --warmup 1 --batch 32
+Tesla T4 | fp32 | conv=direct | set=dev (500 images) | batch 32 | 1 warm-up + 3 timed | median 26899.51 ms | 18.6 images/s
+wrote out\dev/logits.bin, out\dev/top5.bin, out\dev/timing.json
+
+end-to-end check on set 'dev' (500 images)
+  top-1 agreement with reference logits : 100.00%   (gate >= 99.5%)  PASS
+  logit error vs reference               : max 3.433e-05, mean 2.595e-06  finite: PASS
+  top-1 error vs labels                  : 19.20%  (reference 19.20%, gate within 0.5 pp)  PASS
+  top-5 error vs labels                  : 3.20%  (reference 3.20%)  PASS
+  top5.bin consistent with own logits    : 100.00% of rows  PASS
+  timing.json                            : 18.6 images/s, median 26899.51 ms, batch 32, fp32, Tesla T4
+  RESULT: PASS
+
+OVERALL: PASS
+
+C:\EE524-ResNet18-Project\resnet18_project>python tools\submit.py --team "Team 8" --members "Jasmine Soh, Colin Rocks, Julian Soh" --category fp32 --batch 32 --tier 0 --src starter --outdir submissions
+wrote submissions\Team-8_20261119T192840Z.zip  (15 files, 0.16 MB)  team=Team-8 category=fp32 batch=32 tier=0
+
+C:\EE524-ResNet18-Project\resnet18_project>dir
+ Volume in drive C is Windows
+ Volume Serial Number is D696-CEBE
+
+ Directory of C:\EE524-ResNet18-Project\resnet18_project
+
+11/19/2026  11:28 AM    <DIR>          .
+11/18/2026  01:04 PM    <DIR>          ..
+11/18/2026  01:04 PM           147,338 Au26_GPUCompute_ResNet18_FinalProject_Spec.pdf
+11/18/2026  01:04 PM            10,533 GETTING_STARTED.md
+11/19/2026  11:21 AM    <DIR>          out
+11/18/2026  01:04 PM             1,145 README.md
+11/18/2026  01:04 PM             3,139 REFERENCES.md
+11/19/2026  11:16 AM    <DIR>          starter
+11/19/2026  11:28 AM    <DIR>          submissions
+11/18/2026  01:07 PM    <DIR>          tools
+               4 File(s)        162,155 bytes
+               6 Dir(s)   9,503,444,992 bytes free
+
+C:\EE524-ResNet18-Project\resnet18_project>cd submissions
+
+C:\EE524-ResNet18-Project\resnet18_project\submissions>dir
+ Volume in drive C is Windows
+ Volume Serial Number is D696-CEBE
+
+ Directory of C:\EE524-ResNet18-Project\resnet18_project\submissions
+
+11/19/2026  11:28 AM    <DIR>          .
+11/19/2026  11:28 AM    <DIR>          ..
+11/19/2026  11:28 AM           159,266 Team-8_20261119T192840Z.zip
+               1 File(s)        159,266 bytes
+               2 Dir(s)   9,502,277,632 bytes free
+
+C:\EE524-ResNet18-Project\resnet18_project\submissions>

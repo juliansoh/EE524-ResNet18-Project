@@ -1,0 +1,15 @@
+{
+ "batch": 8,
+ "conv_mode": "direct",
+ "device": "Tesla T4",
+ "emulation": false,
+ "images": 8,
+ "images_per_s": 0.07544096681724655,
+ "iter_ms": [
+  106043.1796875
+ ],
+ "iters": 1,
+ "median_ms": 106043.1796875,
+ "precision": "fp32",
+ "warmup": 0
+}

@@ -1,0 +1,31 @@
+{
+ "team": "Team-8",
+ "members": [
+  "Jasmine Soh",
+  "Colin Rocks",
+  "Julian Soh"
+ ],
+ "category": "fp32",
+ "batch": 32,
+ "tier": 0,
+ "engine_args": [],
+ "notes": "",
+ "submitted_utc": "20261119T192840Z",
+ "files": {
+  "CMakeLists.txt": "4a3fdf1294f0904dbb66df59f6ce8f57db9300bb3c989294c231800f352f3eff",
+  "README.md": "0701f1a443aa809c1d7947054b0fb8d063886c97eb17669fc4dba3b82223b8c6",
+  "include/cuda_compat.h": "6cfacc2f4d05c35610befc5a82d11af7f91490fd746a3e4bc05d9ea62fcb12dd",
+  "include/executor.h": "9e596d2d7a7609af0ca6bdd3f8c7c6ec3cbac23b2725b0660da8091faadebbba",
+  "include/kernels.h": "a65e05de85a00f7c9e14617bab6e9aa6658df5594d732300b632672b57ada3cc",
+  "include/manifest.h": "367191423606557af3050656892ead59040be5412b2db9100f46e67c3d798a37",
+  "src/executor.cu": "05cf91d8ea01980501eef42428e68b70abbff2e7bdbb962bd79f162b778f098f",
+  "src/kernels/conv_direct.cu": "173333265e255ef93d2fae2a897802e00f24905aeb54e1fe70cd7c036acdf577",
+  "src/kernels/conv_im2col.cu": "ea6cc6a3723f68c81a86fda1fd9f954d98ea61dc1702c0c3d3acb87e53570f4a",
+  "src/kernels/fc_topk.cu": "1446201e9b43bbb877abf9e7dee2febc1a29fa0c739af23e668de129c4287299",
+  "src/kernels/normalize.cu": "533737bd56970c8a39b9a7bdad9c465528454958fb0e04592a77f399c816ac31",
+  "src/kernels/pool.cu": "afbbf37b50367d3f45706eccd7c6d20738fc6af29570ad367b6ccb89587a156e",
+  "src/main.cu": "73cdca6c8ee3ef39a2c5686c5267589e78f4739c35ef1c7ae75b501c0111b756",
+  "src/manifest.cpp": "91d31e1664a55d53bf2294721e0a6b927425540d0f2ffe9d4bf04f76a81f18a1",
+  "third_party/nlohmann/json.hpp": "9bea4c8066ef4a1c206b2be5a36302f8926f7fdc6087af5d20b417d0cf103ea6"
+ }
+}

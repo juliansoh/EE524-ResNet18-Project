@@ -2,13 +2,19 @@
 // Naive: one thread per element. Easy first replacement; later this fuses into the stem conv's load.
 #include "kernels.h"
 
+// A runtime index into an array inside a by-value kernel parameter makes the compiler copy the struct to local
+// memory, so the channel constants are selected instead of indexed.
+__device__ __forceinline__ float channel_value(const float (&v)[3], int c) {
+    return c == 0 ? v[0] : (c == 1 ? v[1] : v[2]);
+}
+
 template <typename T>
 __global__ void normalize_u8_kernel(const uint8_t* __restrict__ in, T* __restrict__ out, long long n, int C, NormParams np) {
     long long i = blockIdx.x * (long long)blockDim.x + threadIdx.x;
     if (i >= n) return;
     int c = (int)(i % C);
     float v = (float)in[i] * (1.0f / 255.0f);
-    out[i] = from_f32<T>((v - np.mean[c]) / np.std[c]);
+    out[i] = from_f32<T>((v - channel_value(np.mean, c)) / channel_value(np.std, c));
 }
 
 template <typename T>

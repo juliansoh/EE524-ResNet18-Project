@@ -1,0 +1,17 @@
+{
+ "batch": 64,
+ "conv_mode": "direct",
+ "device": "NVIDIA GeForce RTX 2080",
+ "emulation": false,
+ "images": 500,
+ "images_per_s": 24.83504581968942,
+ "iter_ms": [
+  20094.11328125,
+  20132.83984375,
+  20262.607421875
+ ],
+ "iters": 3,
+ "median_ms": 20132.83984375,
+ "precision": "fp32",
+ "warmup": 1
+}

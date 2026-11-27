@@ -1,0 +1,134 @@
+{
+ "batch": 64,
+ "conv_mode": "direct",
+ "device": "NVIDIA GeForce RTX 2080",
+ "images": 500,
+ "iters": 3,
+ "ops": [
+  {
+   "ms": 1.8414506614208221,
+   "name": "normalize",
+   "type": "normalize"
+  },
+  {
+   "ms": 491.0758120218913,
+   "name": "conv1",
+   "type": "conv"
+  },
+  {
+   "ms": 8.638314604759216,
+   "name": "maxpool",
+   "type": "maxpool"
+  },
+  {
+   "ms": 1416.993443806966,
+   "name": "l1b0_conv1",
+   "type": "conv"
+  },
+  {
+   "ms": 1403.3088633219402,
+   "name": "l1b0_conv2",
+   "type": "conv"
+  },
+  {
+   "ms": 1400.8529052734375,
+   "name": "l1b1_conv1",
+   "type": "conv"
+  },
+  {
+   "ms": 1401.2944946289063,
+   "name": "l1b1_conv2",
+   "type": "conv"
+  },
+  {
+   "ms": 701.7458419799805,
+   "name": "l2b0_conv1",
+   "type": "conv"
+  },
+  {
+   "ms": 79.8729174931844,
+   "name": "l2b0_ds",
+   "type": "conv"
+  },
+  {
+   "ms": 1373.388442993164,
+   "name": "l2b0_conv2",
+   "type": "conv"
+  },
+  {
+   "ms": 1374.7405192057292,
+   "name": "l2b1_conv1",
+   "type": "conv"
+  },
+  {
+   "ms": 1373.934076944987,
+   "name": "l2b1_conv2",
+   "type": "conv"
+  },
+  {
+   "ms": 690.0664393107096,
+   "name": "l3b0_conv1",
+   "type": "conv"
+  },
+  {
+   "ms": 80.18306191762288,
+   "name": "l3b0_ds",
+   "type": "conv"
+  },
+  {
+   "ms": 1313.9039866129558,
+   "name": "l3b0_conv2",
+   "type": "conv"
+  },
+  {
+   "ms": 1315.3019561767578,
+   "name": "l3b1_conv1",
+   "type": "conv"
+  },
+  {
+   "ms": 1314.1773681640625,
+   "name": "l3b1_conv2",
+   "type": "conv"
+  },
+  {
+   "ms": 659.1167755126953,
+   "name": "l4b0_conv1",
+   "type": "conv"
+  },
+  {
+   "ms": 80.42206923166911,
+   "name": "l4b0_ds",
+   "type": "conv"
+  },
+  {
+   "ms": 1199.6819712320964,
+   "name": "l4b0_conv2",
+   "type": "conv"
+  },
+  {
+   "ms": 1211.4081726074219,
+   "name": "l4b1_conv1",
+   "type": "conv"
+  },
+  {
+   "ms": 1220.6318028767903,
+   "name": "l4b1_conv2",
+   "type": "conv"
+  },
+  {
+   "ms": 0.2892799973487854,
+   "name": "avgpool",
+   "type": "avgpool"
+  },
+  {
+   "ms": 7.3259627024332685,
+   "name": "fc",
+   "type": "fc"
+  },
+  {
+   "ms": 6.930911997954051,
+   "name": "top5",
+   "type": "topk"
+  }
+ ]
+}

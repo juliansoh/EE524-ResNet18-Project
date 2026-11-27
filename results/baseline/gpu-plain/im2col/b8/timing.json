@@ -1,0 +1,17 @@
+{
+ "batch": 8,
+ "conv_mode": "im2col",
+ "device": "NVIDIA GeForce RTX 2080",
+ "emulation": false,
+ "images": 500,
+ "images_per_s": 22.137235989680587,
+ "iter_ms": [
+  22576.0234375,
+  22595.0390625,
+  22586.37890625
+ ],
+ "iters": 3,
+ "median_ms": 22586.37890625,
+ "precision": "fp32",
+ "warmup": 1
+}

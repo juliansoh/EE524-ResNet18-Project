@@ -1,0 +1,134 @@
+{
+ "batch": 1,
+ "conv_mode": "direct",
+ "device": "CPU emulation (no GPU)",
+ "images": 8,
+ "iters": 1,
+ "ops": [
+  {
+   "ms": 9.378865003585815,
+   "name": "normalize",
+   "type": "normalize"
+  },
+  {
+   "ms": 1153.2044219970703,
+   "name": "conv1",
+   "type": "conv"
+  },
+  {
+   "ms": 86.44825744628906,
+   "name": "maxpool",
+   "type": "maxpool"
+  },
+  {
+   "ms": 905.25830078125,
+   "name": "l1b0_conv1",
+   "type": "conv"
+  },
+  {
+   "ms": 906.4780578613281,
+   "name": "l1b0_conv2",
+   "type": "conv"
+  },
+  {
+   "ms": 907.6620407104492,
+   "name": "l1b1_conv1",
+   "type": "conv"
+  },
+  {
+   "ms": 905.2978820800781,
+   "name": "l1b1_conv2",
+   "type": "conv"
+  },
+  {
+   "ms": 454.72689056396484,
+   "name": "l2b0_conv1",
+   "type": "conv"
+  },
+  {
+   "ms": 61.69354820251465,
+   "name": "l2b0_ds",
+   "type": "conv"
+  },
+  {
+   "ms": 875.4799957275391,
+   "name": "l2b0_conv2",
+   "type": "conv"
+  },
+  {
+   "ms": 876.2728576660156,
+   "name": "l2b1_conv1",
+   "type": "conv"
+  },
+  {
+   "ms": 894.8022689819336,
+   "name": "l2b1_conv2",
+   "type": "conv"
+  },
+  {
+   "ms": 448.519775390625,
+   "name": "l3b0_conv1",
+   "type": "conv"
+  },
+  {
+   "ms": 56.07023477554321,
+   "name": "l3b0_ds",
+   "type": "conv"
+  },
+  {
+   "ms": 833.8543243408203,
+   "name": "l3b0_conv2",
+   "type": "conv"
+  },
+  {
+   "ms": 833.5108337402344,
+   "name": "l3b1_conv1",
+   "type": "conv"
+  },
+  {
+   "ms": 831.9626541137695,
+   "name": "l3b1_conv2",
+   "type": "conv"
+  },
+  {
+   "ms": 418.893798828125,
+   "name": "l4b0_conv1",
+   "type": "conv"
+  },
+  {
+   "ms": 53.413602352142334,
+   "name": "l4b0_ds",
+   "type": "conv"
+  },
+  {
+   "ms": 759.8004455566406,
+   "name": "l4b0_conv2",
+   "type": "conv"
+  },
+  {
+   "ms": 759.0991058349609,
+   "name": "l4b1_conv1",
+   "type": "conv"
+  },
+  {
+   "ms": 758.5247039794922,
+   "name": "l4b1_conv2",
+   "type": "conv"
+  },
+  {
+   "ms": 0.24206399731338024,
+   "name": "avgpool",
+   "type": "avgpool"
+  },
+  {
+   "ms": 4.248047053813934,
+   "name": "fc",
+   "type": "fc"
+  },
+  {
+   "ms": 0.1032729996368289,
+   "name": "top5",
+   "type": "topk"
+  }
+ ]
+}

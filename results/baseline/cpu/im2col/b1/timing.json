@@ -1,0 +1,15 @@
+{
+ "batch": 1,
+ "conv_mode": "im2col",
+ "device": "CPU emulation (no GPU)",
+ "emulation": true,
+ "images": 8,
+ "images_per_s": 0.4044159935862151,
+ "iter_ms": [
+  19781.611328125
+ ],
+ "iters": 1,
+ "median_ms": 19781.611328125,
+ "precision": "fp32",
+ "warmup": 0
+}

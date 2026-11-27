@@ -1,0 +1,15 @@
+{
+ "batch": 1,
+ "conv_mode": "direct",
+ "device": "CPU emulation (no GPU)",
+ "emulation": true,
+ "images": 8,
+ "images_per_s": 0.5799203841236318,
+ "iter_ms": [
+  13794.9970703125
+ ],
+ "iters": 1,
+ "median_ms": 13794.9970703125,
+ "precision": "fp32",
+ "warmup": 0
+}
